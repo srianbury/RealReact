@@ -13,10 +13,12 @@ class Input extends React.Component {
 
     render() {
         return (
-            <div>
-                <input value={this.state.value} onChange={this.handleChange} />
-                <button onClick={this.handleAdd}>{this.props.submitText}</button>
-                <button onClick={this.handleClear}>{this.props.cancelText}</button>
+            <div className='w-75'>
+                <input className='w-100' value={this.state.value} onChange={this.handleChange} onKeyPress={this.handleEnter}/>
+                <div className='d-flex justify-content-end mt-2'>
+                    <button onClick={this.handleAdd} className='btn btn-sm btn-primary'>{this.props.submitText}</button>
+                    <button onClick={this.handleClear} className='btn btn-sm btn-danger ml-1'>{this.props.cancelText}</button>
+                </div>
             </div>
         );
     }
@@ -34,6 +36,12 @@ class Input extends React.Component {
             value: ''
         });
         this.props.handleCancel();
+    }
+
+    handleEnter = (e) => {
+        if(e.key==='Enter'){
+            this.handleAdd();
+        }
     }
 }
 

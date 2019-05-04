@@ -29,7 +29,7 @@ class Crud extends React.Component {
     render() {
         const { data } = this.state;
         return (
-            <div>
+            <div className='container mt-4'>
                 <InputWithLoading
                     loading={this.state.creating}
                     handleSubmit={this.create}

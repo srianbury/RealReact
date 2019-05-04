@@ -13,7 +13,7 @@ class ListView extends React.Component{
             return(<NoData />);
         } else {
             return(
-                <div>
+                <div className='mt-2'>
                     {data.map(row => 
                         <Row 
                             key={row.id}
@@ -34,10 +34,12 @@ ListView.propTypes = {
 
 const ViewRow = (props) => {
     return(
-        <div>
+        <div className='w-75 d-flex justify-content-between'>
             {props.value}
-            <button onClick={props.handleEdit}>Edit</button>
-            <button onClick={props.handleDelete}>Delete</button>
+            <div>
+                <button className='btn btn-sm btn-success' onClick={props.handleEdit}>Edit</button>
+                <button className='btn btn-sm btn-danger ml-1' onClick={props.handleDelete}>Delete</button>
+            </div>
         </div>
     );
 }
@@ -57,9 +59,9 @@ class Row extends React.Component{
     render(){
         const { edit, loading } = this.state;
         const { value, id } = this.props.record;
-
+        let row;
         if(edit){
-            return(
+            row = (
                 <InputWithLoading
                     loading={loading}
                     value={value}
@@ -70,7 +72,7 @@ class Row extends React.Component{
                     cancelText='Cancel' />
             );
         } else {
-            return(
+            row =(
                 <ViewWithLoading
                     loading={loading}
                     value={value} 
@@ -78,6 +80,10 @@ class Row extends React.Component{
                     handleDelete={this.handleDelete} />
             );
         }
+
+        return(
+            <div className='mt-1'>{row}</div>
+        );
     }
 
     componentDidUpdate(prevProps){
