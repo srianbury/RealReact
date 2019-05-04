@@ -1,35 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Loading, NoData, withLoading } from './FunctionalComps';
+import { Loading, NoData, withLoading, withEdit } from './FunctionalComps';
 import Input from './Input';
-
-
-class ListView extends React.Component{
-    render(){
-        const { data } = this.props;
-        if(data===null){
-            return(<Loading />);
-        } else if(data.length===0) {
-            return(<NoData />);
-        } else {
-            return(
-                <div className='mt-2'>
-                    {data.map(row => 
-                        <Row 
-                            key={row.id}
-                            record={row}
-                            handleSubmit={this.props.handleSubmit}
-                            handleDelete={this.props.handleDelete} />)}
-                </div>
-            );
-        }
-    }
-}
-ListView.propTypes = {
-    data: PropTypes.array, //not isRequired because null is allower but would throw a console error
-    handleSubmit: PropTypes.func.isRequired,
-    handleDelete: PropTypes.func.isRequired
-}
 
 
 const ViewRow = (props) => {
@@ -47,6 +19,35 @@ const ViewRow = (props) => {
 
 const InputWithLoading = withLoading(Input);
 const ViewWithLoading = withLoading(ViewRow);
+const RowWithEdit = withEdit(InputWithLoading, ViewWithLoading);
+class ListView extends React.Component{
+    render(){
+        const { data } = this.props;
+        if(data===null){
+            return(<Loading />);
+        } else if(data.length===0) {
+            return(<NoData />);
+        } else {
+            return(
+                <div className='mt-2'>
+                    {data.map(row => 
+                        <RowWithEdit
+                            key={row.id}
+                            record={row}
+                            handleSubmit={this.props.handleSubmit}
+                            handleDelete={this.props.handleDelete} />)}
+                </div>
+            );
+        }
+    }
+}
+ListView.propTypes = {
+    data: PropTypes.array, //not isRequired because null is allower but would throw a console error
+    handleSubmit: PropTypes.func.isRequired,
+    handleDelete: PropTypes.func.isRequired
+}
+
+
 class Row extends React.Component{
     constructor(props){
         super(props);

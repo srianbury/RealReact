@@ -32,7 +32,7 @@ class Crud extends React.Component {
             <div className='container mt-4'>
                 <InputWithLoading
                     loading={this.state.creating}
-                    handleSubmit={this.create}
+                    handleSubmit={this.create}   
                     handleCancel={()=>{}}
                     submitText='Add'
                     cancelText='Cancel' />
