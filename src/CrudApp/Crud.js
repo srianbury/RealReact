@@ -5,14 +5,20 @@ import { withLoading } from './FunctionalComps';
 
 
 const InputWithLoading = withLoading(Input);
+/*
+    You can easily port with with your own data assuming 
+    your data is a list of object with a key value of id i.e then any other key-value-pairs
+    data = [
+        { id: 0, anythingElse: 'my value' },
+        { id: 0, anythingElse: 'another value; }
+    ]
+*/
 class Crud extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             data: null,
-            creating: false,
-            editing: false,
-            deleting: false
+            creating: false
         }
     }
 
@@ -26,8 +32,6 @@ class Crud extends React.Component {
             <div>
                 <InputWithLoading
                     loading={this.state.creating}
-                    id={-1}
-                    value=''
                     handleSubmit={this.create}
                     handleCancel={()=>{}}
                     submitText='Add'
@@ -43,6 +47,8 @@ class Crud extends React.Component {
     create = (data) => {
         this.setState({ creating: true });
         setTimeout(() => {
+            //fetch and return an id upon successfully creation
+            data.id = new Date().getTime();
             let updatedData = this.state.data;
             updatedData.push(data);
             this.setState({ data: updatedData, creating: false });
@@ -67,8 +73,8 @@ class Crud extends React.Component {
     }
 
     delete = (data) => {
-        const updatedData = this.state.data.filter(row => row.id !== data.id);
         setTimeout(() => {
+            const updatedData = this.state.data.filter(row => row.id !== data.id);
             this.setState({ data: updatedData });
         }, 1000);
     }

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
+//Form with one input component
 class Input extends React.Component {
     constructor(props) {
         super(props);
@@ -25,12 +26,7 @@ class Input extends React.Component {
     }
 
     handleAdd = () => {
-        const { id } = this.props;
-        const data = {
-            id: id > 0 ? id : new Date().getTime(),
-            value: this.state.value
-        }
-        this.props.handleSubmit(data);
+        this.props.handleSubmit(this.state);
     }
 
     handleClear = () => {
@@ -49,5 +45,7 @@ Input.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     handleCancel: PropTypes.func.isRequired,
     submitText: PropTypes.string.isRequired,
-    cancelText: PropTypes.string.isRequired
+    cancelText: PropTypes.string.isRequired,
+    value: PropTypes.any,
+    id: PropTypes.any
 }

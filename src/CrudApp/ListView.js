@@ -17,7 +17,7 @@ class ListView extends React.Component{
                     {data.map(row => 
                         <Row 
                             key={row.id}
-                            data={row}
+                            record={row}
                             handleSubmit={this.props.handleSubmit}
                             handleDelete={this.props.handleDelete} />)}
                 </div>
@@ -26,11 +26,13 @@ class ListView extends React.Component{
     }
 }
 ListView.propTypes = {
-    //data: PropTypes.array.isRequired
+    data: PropTypes.array, //not isRequired because null is allower but would throw a console error
+    handleSubmit: PropTypes.func.isRequired,
+    handleDelete: PropTypes.func.isRequired
 }
 
 
-const View = (props) => {
+const ViewRow = (props) => {
     return(
         <div>
             {props.value}
@@ -42,7 +44,7 @@ const View = (props) => {
 
 
 const InputWithLoading = withLoading(Input);
-const ViewWithLoading = withLoading(View);
+const ViewWithLoading = withLoading(ViewRow);
 class Row extends React.Component{
     constructor(props){
         super(props);
@@ -54,14 +56,14 @@ class Row extends React.Component{
 
     render(){
         const { edit, loading } = this.state;
-        const { data } = this.props;
+        const { value, id } = this.props.record;
 
         if(edit){
             return(
                 <InputWithLoading
                     loading={loading}
-                    value={data.value}
-                    id={data.id}
+                    value={value}
+                    id={id}
                     handleSubmit={this.handleSubmit}
                     handleCancel={()=>this.setState({edit:false})}
                     submitText='Save'
@@ -71,7 +73,7 @@ class Row extends React.Component{
             return(
                 <ViewWithLoading
                     loading={loading}
-                    value={data.value} 
+                    value={value} 
                     handleEdit={()=>this.setState({edit:true})}
                     handleDelete={this.handleDelete} />
             );
@@ -87,18 +89,21 @@ class Row extends React.Component{
         }
     }
 
-    handleSubmit = (data) => {
+    handleSubmit = (updatedRecord) => {
         this.setState({loading:true});
-        this.props.handleSubmit(data);
+        updatedRecord.id = this.props.record.id;
+        this.props.handleSubmit(updatedRecord);
     }
 
     handleDelete = () => {
         this.setState({loading: true});
-        this.props.handleDelete(this.props.data);
+        this.props.handleDelete(this.props.record);
     }
 }
 Row.propTypes = {
-    data: PropTypes.any.isRequired
+    record: PropTypes.any.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    handleDelete: PropTypes.func.isRequired
 }
 
 
