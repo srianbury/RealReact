@@ -115,3 +115,6 @@ Row.propTypes = {
 
 
 export default ListView;
+export {
+    ViewRow
+}

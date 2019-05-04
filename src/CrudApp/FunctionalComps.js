@@ -94,7 +94,35 @@ withEdit.propTypes = {
     handleDelete: PropTypes.func.isRequired
 }
 
-const withCrud = (Input, ListView) => {
+
+const withListViewEditSameAsCreate = (EditRow, ViewRow) => {
+    const RowWithEdit = withEdit(withLoading(EditRow), withLoading(ViewRow));
+    return class extends React.Component{
+        render(){
+            const { data } = this.props;
+            if(data===null){
+                return(<Loading />);
+            } else if(data.length===0) {
+                return(<NoData />);
+            } else {
+                return(
+                    <div className='mt-2'>
+                        {data.map(row => 
+                            <RowWithEdit
+                                key={row.id}
+                                record={row}
+                                handleSubmit={this.props.handleSubmit}
+                                handleDelete={this.props.handleDelete} />)}
+                    </div>
+                );
+            }
+        }
+    }
+}
+
+
+const withCrud = (Input, ViewRow) => {
+    const ListViewWithEditSameAsCreate = withListViewEditSameAsCreate(Input, ViewRow);
     return class extends React.Component{
         constructor(props) {
             super(props);
@@ -118,7 +146,7 @@ const withCrud = (Input, ListView) => {
                         handleCancel={()=>{}}
                         submitText='Add'
                         cancelText='Cancel' />
-                    <ListView 
+                    <ListViewWithEditSameAsCreate 
                         data={data} 
                         handleSubmit={this.update}
                         handleDelete={this.delete} />
