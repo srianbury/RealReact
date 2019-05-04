@@ -95,7 +95,7 @@ withEdit.propTypes = {
 }
 
 
-const withListViewEditSameAsCreate = (EditRow, ViewRow) => {
+const withRowEditSameAsCreateForm = (EditRow, ViewRow) => {
     const RowWithEdit = withEdit(withLoading(EditRow), withLoading(ViewRow));
     return class extends React.Component{
         render(){
@@ -122,7 +122,8 @@ const withListViewEditSameAsCreate = (EditRow, ViewRow) => {
 
 
 const withCrud = (Input, ViewRow) => {
-    const ListViewWithEditSameAsCreate = withListViewEditSameAsCreate(Input, ViewRow);
+    const ListViewWithEditSameAsCreate = withRowEditSameAsCreateForm(Input, ViewRow);
+    const InputWithLoading = withLoading(Input);
     return class extends React.Component{
         constructor(props) {
             super(props);
@@ -140,7 +141,7 @@ const withCrud = (Input, ViewRow) => {
             const { data } = this.state;
             return (
                 <div className='container mt-4'>
-                    <Input
+                    <InputWithLoading
                         loading={this.state.creating}
                         handleSubmit={this.create}   
                         handleCancel={()=>{}}
