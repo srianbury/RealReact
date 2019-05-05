@@ -72,7 +72,7 @@ withEdit.propTypes = {
 }
 
 
-const withRowEditSameAsCreateForm = (EditRow, ViewRow) => {
+const withRowEdit = (EditRow, ViewRow) => {
     const RowWithEdit = withEdit(withLoading(EditRow), withLoading(ViewRow));
     return class extends React.Component{
         render(){
@@ -96,7 +96,7 @@ const withRowEditSameAsCreateForm = (EditRow, ViewRow) => {
         }
     }
 }
-withRowEditSameAsCreateForm.propTypes = {
+withRowEdit.propTypes = {
     data: PropTypes.array, //not isRequired because null is allower but would throw a console error
     handleSubmit: PropTypes.func.isRequired,
     handleDelete: PropTypes.func.isRequired
@@ -104,6 +104,6 @@ withRowEditSameAsCreateForm.propTypes = {
 
 
 export {
-    withRowEditSameAsCreateForm,
+    withRowEdit,
     withEdit
 }

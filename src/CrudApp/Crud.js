@@ -1,11 +1,11 @@
 import React from 'react';
 import { withLoading } from './FunctionalComps';
-import { withRowEditSameAsCreateForm } from './ListView';
+import { withRowEdit } from './ListView';
 import PropTypes from 'prop-types';
 
 
-const withCrud = (Input, ViewRow, apiHandler) => {
-    const ListViewWithEditSameAsCreate = withRowEditSameAsCreateForm(Input, ViewRow);
+const withCrud = (Input, ViewRow, EditRow, apiHandler) => {
+    const ListViewWithRowEdit = withRowEdit(EditRow, ViewRow);
     const InputWithLoading = withLoading(Input);
     return class extends React.Component{
         constructor(props) {
@@ -31,7 +31,7 @@ const withCrud = (Input, ViewRow, apiHandler) => {
                         handleCancel={()=>{}}
                         submitText='Add'
                         cancelText='Cancel' />
-                    <ListViewWithEditSameAsCreate 
+                    <ListViewWithRowEdit 
                         data={data} 
                         handleSubmit={this.update}
                         handleDelete={this.delete} />
