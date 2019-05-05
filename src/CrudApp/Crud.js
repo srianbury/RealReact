@@ -25,6 +25,7 @@ const withCrud = (Input, ViewRow, apiHandler) => {
                 <div className='container mt-4'>
                     <InputWithLoading
                         loading={this.state.creating}
+                        data={null}
                         handleSubmit={this.create}   
                         handleCancel={()=>{}}
                         submitText='Add'
@@ -37,33 +38,43 @@ const withCrud = (Input, ViewRow, apiHandler) => {
             );
         }
         
-        create = (data) => {
+        create = (newRecord) => {
             this.setState({ creating: true });
-            setTimeout(()=>{
-                const newList = apiHandler.create(this.state.data, data);
-                this.setState({ data: newList, creating: false });
-            }, 1000);
+            apiHandler.create(newRecord).then(json => {
+                let updatedList = this.state.data;
+                updatedList.unshift(json);
+                this.setState({
+                    data: updatedList,
+                    creating: false
+                });
+            });
         }
 
         read = () => {
-            setTimeout(() => {
-                const data = apiHandler.read();
+            apiHandler.read().then(data => {
                 this.setState({ data });
-            }, 1000);
+            });
         }
 
-        update = (data) => {
-            setTimeout(() => {
-                const updatedData = apiHandler.update(this.state.data, data);
-                this.setState({ data: updatedData });
-            }, 1000);
+        update = (updatedRecord) => {
+            apiHandler.read().then(ok => {
+                if(ok){
+                    const updatedList = this.state.data.map(row => {
+                        if(row.id===updatedRecord.id){ return updatedRecord; }
+                        return row;
+                    });
+                    this.setState({data: updatedList});
+                }
+            });
         }
 
-        delete = (data) => {
-            setTimeout(() => {
-                const updatedData = apiHandler.delete(this.state.data, data);
-                this.setState({ data: updatedData });
-            }, 1000);
+        delete = (deleteRecord) => {
+            apiHandler.delete(deleteRecord).then(ok => {
+                if(ok){
+                    const updatedList = this.state.data.filter(row => row.id!==deleteRecord.id);
+                    this.setState({data: updatedList});
+                }
+            });
         }
     }
 }

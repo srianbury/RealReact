@@ -8,10 +8,11 @@ import {
 import './App.css';
 import { withCrud } from './CrudApp/Crud';
 import { Input, ViewRow, basicApiHandler } from './CrudApp/Deltas/Basic';
+import { UserInput, UserViewRow, userApiHandler } from './CrudApp/Deltas/Users';
 
 
 const BasicWithCrud = withCrud(Input, ViewRow, basicApiHandler);
-const Users = () => { return(<div>Temp</div>); }
+const UsersWithCrud = withCrud(UserInput, UserViewRow, userApiHandler);
 const App = () => {
 	return (
 		<Router>
@@ -22,7 +23,7 @@ const App = () => {
 					component={BasicWithCrud}
 					path="/" />
 				<Route
-					component={Users}
+					component={UsersWithCrud}
 					path="/" />
 			</Switch>
 		</Router>

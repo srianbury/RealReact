@@ -15,13 +15,14 @@ const withEdit = (EditRow, ViewRow) => {
 
         render(){
             const { edit, loading } = this.state;
-            const { value, id } = this.props.record;
+            const { record } = this.props;
+            const { id } = record;
             let row;
             if(edit){
                 row = (
                     <EditRow
                         loading={loading}
-                        value={value}
+                        data={record}
                         id={id}
                         handleSubmit={this.handleSubmit}
                         handleCancel={()=>this.setState({edit:false})}
@@ -32,7 +33,7 @@ const withEdit = (EditRow, ViewRow) => {
                 row =(
                     <ViewRow
                         loading={loading}
-                        value={value} 
+                        record={record} 
                         handleEdit={()=>this.setState({edit:true})}
                         handleDelete={this.handleDelete} />
                 );
@@ -76,7 +77,7 @@ const withRowEditSameAsCreateForm = (EditRow, ViewRow) => {
     return class extends React.Component{
         render(){
             const { data } = this.props;
-            if(data===null){
+            if(data==null){
                 return(<Loading />);
             } else if(data.length===0) {
                 return(<NoData />);
