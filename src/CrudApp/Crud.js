@@ -1,6 +1,7 @@
 import React from 'react';
 import { withLoading } from './FunctionalComps';
 import { withRowEditSameAsCreateForm } from './ListView';
+import PropTypes from 'prop-types';
 
 
 const withCrud = (Input, ViewRow, apiHandler) => {
@@ -80,6 +81,24 @@ const withCrud = (Input, ViewRow, apiHandler) => {
 }
 
 
+const inputPropTypes = {
+    handleSubmit: PropTypes.func.isRequired,
+    handleCancel: PropTypes.func.isRequired,
+    submitText: PropTypes.string.isRequired,
+    cancelText: PropTypes.string.isRequired,
+    data: PropTypes.object
+}
+
+
+const viewPropTypes = {
+    record: PropTypes.object,
+    handleEdit: PropTypes.func,
+    handleDelete: PropTypes.func
+}
+
+
 export {
-    withCrud
+    withCrud,
+    inputPropTypes,
+    viewPropTypes
 };

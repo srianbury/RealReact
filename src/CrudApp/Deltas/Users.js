@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { inputPropTypes, viewPropTypes } from '../Crud.js';
 
 
 class UserInput extends React.Component{
@@ -86,13 +86,7 @@ class UserInput extends React.Component{
         this.props.handleCancel();
     }
 }
-UserInput.propTypes = {
-    handleSubmit: PropTypes.func.isRequired,
-    handleCancel: PropTypes.func.isRequired,
-    submitText: PropTypes.string.isRequired,
-    cancelText: PropTypes.string.isRequired,
-    data: PropTypes.object
-}
+UserInput.propTypes = inputPropTypes;
 
 
 const UserViewRow = (props) => {
@@ -124,6 +118,7 @@ const UserViewRow = (props) => {
         </div>
     );
 }
+UserViewRow.propTypes = viewPropTypes;
 
 
 const url = 'https://jsonplaceholder.typicode.com/users';

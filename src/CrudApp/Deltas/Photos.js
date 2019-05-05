@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { inputPropTypes, viewPropTypes } from '../Crud.js';
 
 
 class PhotoInput extends React.Component {
@@ -114,13 +114,7 @@ class PhotoInput extends React.Component {
         this.props.handleCancel();
     }
 }
-PhotoInput.propTypes = {
-    handleSubmit: PropTypes.func.isRequired,
-    handleCancel: PropTypes.func.isRequired,
-    submitText: PropTypes.string.isRequired,
-    cancelText: PropTypes.string.isRequired,
-    data: PropTypes.object
-}
+PhotoInput.propTypes = inputPropTypes;
 
 
 const PhotoViewRow = (props) => {
@@ -150,7 +144,7 @@ const PhotoViewRow = (props) => {
         </div>
     );
 }
-
+PhotoViewRow.propTypes = viewPropTypes;
 
 const url = 'https://jsonplaceholder.typicode.com/photos';
 const photoApiHandler = {
