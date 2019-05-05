@@ -3,19 +3,6 @@ import PropTypes from 'prop-types';
 import { Loading, NoData, withLoading } from './FunctionalComps';
 
 
-const ViewRow = (props) => {
-    return(
-        <div className='d-flex justify-content-between'>
-            {props.value}
-            <div>
-                <button className='btn btn-sm btn-success' onClick={props.handleEdit}>Edit</button>
-                <button className='btn btn-sm btn-danger ml-1' onClick={props.handleDelete}>Delete</button>
-            </div>
-        </div>
-    );
-}
-
-
 const withEdit = (EditRow, ViewRow) => {
     return class extends React.Component{
         constructor(props){
@@ -116,7 +103,6 @@ withRowEditSameAsCreateForm.propTypes = {
 
 
 export {
-    ViewRow,
     withRowEditSameAsCreateForm,
     withEdit
 }

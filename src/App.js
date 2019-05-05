@@ -1,9 +1,7 @@
 import React from 'react';
 import './App.css';
 import { withCrud } from './CrudApp/Crud';
-import Input from './CrudApp/Input';
-import { ViewRow } from './CrudApp/ListView';
-import { basicApiHandler } from './CrudApp/Deltas/Basic';
+import { Input, ViewRow, basicApiHandler } from './CrudApp/Deltas/Basic';
 
 
 const UsersWithCrud = withCrud(Input, ViewRow, basicApiHandler);
