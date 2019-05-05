@@ -1,84 +1,74 @@
 import React from 'react';
-import Input from './Input';
-import ListView from './ListView';
 import { withLoading } from './FunctionalComps';
+import { withRowEditSameAsCreateForm } from './ListView';
 
 
-const InputWithLoading = withLoading(Input);
-/*
-    You can easily port with with your own data assuming 
-    your data is a list of object with a key value of id i.e then any other key-value-pairs
-    data = [
-        { id: 0, anythingElse: 'my value' },
-        { id: 0, anythingElse: 'another value; }
-    ]
-*/
-class Crud extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: null,
-            creating: false
+const withCrud = (Input, ViewRow, apiHandler) => {
+    const ListViewWithEditSameAsCreate = withRowEditSameAsCreateForm(Input, ViewRow);
+    const InputWithLoading = withLoading(Input);
+    return class extends React.Component{
+        constructor(props) {
+            super(props);
+            this.state = {
+                data: null,
+                creating: false
+            }
         }
-    }
 
-    componentDidMount() {
-        this.read();
-    }
+        componentDidMount() {
+            this.read();
+        }
 
-    render() {
-        const { data } = this.state;
-        return (
-            <div className='container mt-4'>
-                <InputWithLoading
-                    loading={this.state.creating}
-                    handleSubmit={this.create}   
-                    handleCancel={()=>{}}
-                    submitText='Add'
-                    cancelText='Cancel' />
-                <ListView 
-                    data={data} 
-                    handleSubmit={this.update}
-                    handleDelete={this.delete} />
-            </div>
-        );
-    }
+        render() {
+            const { data } = this.state;
+            return (
+                <div className='container mt-4'>
+                    <InputWithLoading
+                        loading={this.state.creating}
+                        handleSubmit={this.create}   
+                        handleCancel={()=>{}}
+                        submitText='Add'
+                        cancelText='Cancel' />
+                    <ListViewWithEditSameAsCreate 
+                        data={data} 
+                        handleSubmit={this.update}
+                        handleDelete={this.delete} />
+                </div>
+            );
+        }
+        
+        create = (data) => {
+            this.setState({ creating: true });
+            setTimeout(()=>{
+                const newList = apiHandler.create(this.state.data, data);
+                this.setState({ data: newList, creating: false });
+            }, 1000);
+        }
 
-    create = (data) => {
-        this.setState({ creating: true });
-        setTimeout(() => {
-            //fetch and return an id upon successfully creation
-            data.id = new Date().getTime();
-            let updatedData = this.state.data;
-            updatedData.push(data);
-            this.setState({ data: updatedData, creating: false });
-        }, 1000);
-    }
+        read = () => {
+            setTimeout(() => {
+                const data = apiHandler.read();
+                this.setState({ data });
+            }, 1000);
+        }
 
-    read = () => {
-        setTimeout(() => {
-            const data = [{ id: 1, value: 'brian' }, { id: 2, value: 'pete' }];
-            this.setState({ data });
-        }, 1000);
-    }
+        update = (data) => {
+            setTimeout(() => {
+                const updatedData = apiHandler.update(this.state.data, data);
+                this.setState({ data: updatedData });
+            }, 1000);
+        }
 
-    update = (data) => {
-        setTimeout(() => {
-            const updatedData = this.state.data.map(row => {
-                if (row.id === data.id) { return data; }
-                return row;
-            });
-            this.setState({ data: updatedData });
-        }, 1000);
-    }
-
-    delete = (data) => {
-        setTimeout(() => {
-            const updatedData = this.state.data.filter(row => row.id !== data.id);
-            this.setState({ data: updatedData });
-        }, 1000);
+        delete = (data) => {
+            setTimeout(() => {
+                const updatedData = apiHandler.delete(this.state.data, data);
+                this.setState({ data: updatedData });
+            }, 1000);
+        }
     }
 }
 
 
-export default Crud;
+export {
+    withCrud
+};

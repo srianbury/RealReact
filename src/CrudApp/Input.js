@@ -13,7 +13,7 @@ class Input extends React.Component {
 
     render() {
         return (
-            <div className='w-75'>
+            <div>
                 <input className='w-100' value={this.state.value} onChange={this.handleChange} onKeyPress={this.handleEnter}/>
                 <div className='d-flex justify-content-end mt-2'>
                     <button onClick={this.handleAdd} className='btn btn-sm btn-primary'>{this.props.submitText}</button>
