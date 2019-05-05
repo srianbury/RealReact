@@ -90,7 +90,8 @@ UserInput.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     handleCancel: PropTypes.func.isRequired,
     submitText: PropTypes.string.isRequired,
-    cancelText: PropTypes.string.isRequired
+    cancelText: PropTypes.string.isRequired,
+    data: PropTypes.object
 }
 
 
