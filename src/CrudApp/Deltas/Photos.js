@@ -215,6 +215,7 @@ const PhotoViewRow = (props) => {
 }
 PhotoViewRow.propTypes = viewPropTypes;
 
+
 const url = 'https://jsonplaceholder.typicode.com/photos';
 const photoApiHandler = {
     async create(newRecord){
@@ -254,6 +255,7 @@ const photoApiHandler = {
         return response.ok;
     }
 }
+
 
 export {
     PhotoInput,
