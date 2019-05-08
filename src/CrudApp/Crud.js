@@ -69,11 +69,13 @@ const withCrud = (Input, ViewRow, EditRow, apiHandler) => {
             });
         }
 
-        delete = (deleteRecord) => {
+        delete = (deleteRecord) => { //optomistic loading
+            const { data } = this.state;
+            const updatedList = this.state.data.filter(row => row.id!==deleteRecord.id);
+            this.setState({data: updatedList});
             apiHandler.delete(deleteRecord).then(ok => {
-                if(ok){
-                    const updatedList = this.state.data.filter(row => row.id!==deleteRecord.id);
-                    this.setState({data: updatedList});
+                if(!ok){
+                    this.setState({data});
                 }
             });
         }

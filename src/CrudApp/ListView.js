@@ -60,7 +60,6 @@ const withEdit = (EditRow, ViewRow) => {
         }
     
         handleDelete = () => {
-            this.setState({loading: true});
             this.props.handleDelete(this.props.record);
         }
     }
