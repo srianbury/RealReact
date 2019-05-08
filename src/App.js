@@ -9,11 +9,12 @@ import './App.css';
 import { withCrud } from './CrudApp/Crud';
 import { UserInput, UserViewRow, userApiHandler } from './CrudApp/Deltas/Users';
 import { PhotoInput, PhotoViewRow, PhotoEdit, photoApiHandler } from './CrudApp/Deltas/Photos';
+import { Loading} from './CrudApp/FunctionalComps';
 
 
-const UsersWithCrud = withCrud(UserInput, UserViewRow, UserInput, userApiHandler);
-const PhotoswithCrud = withCrud(PhotoInput, PhotoViewRow, PhotoInput, photoApiHandler);
-const PhotosWithCrudWithDifferentEditForm = withCrud(PhotoInput, PhotoViewRow, PhotoEdit, photoApiHandler);
+const UsersWithCrud = withCrud(UserInput, UserViewRow, UserInput, Loading, userApiHandler);
+const PhotoswithCrud = withCrud(PhotoInput, PhotoViewRow, PhotoInput, Loading, photoApiHandler);
+const PhotosWithCrudWithDifferentEditForm = withCrud(PhotoInput, PhotoViewRow, PhotoEdit, Loading, photoApiHandler);
 const App = () => {
 	return (
 		<Router>

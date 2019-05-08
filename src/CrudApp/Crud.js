@@ -4,8 +4,8 @@ import { withRowEdit } from './ListView';
 import PropTypes from 'prop-types';
 
 
-const withCrud = (Input, ViewRow, EditRow, apiHandler) => {
-    const ListViewWithRowEdit = withRowEdit(EditRow, ViewRow);
+const withCrud = (Input, ViewRow, EditRow, LoadingScreen, apiHandler) => {
+    const ListViewWithRowEdit = withRowEdit(EditRow, ViewRow, LoadingScreen);
     const InputWithLoading = withLoading(Input);
     return class extends React.Component{
         constructor(props) {
@@ -26,6 +26,7 @@ const withCrud = (Input, ViewRow, EditRow, apiHandler) => {
                 <div className='container mt-4'>
                     <InputWithLoading
                         loading={this.state.creating}
+                        loader={LoadingScreen}
                         data={null}
                         handleSubmit={this.create}   
                         handleCancel={()=>{}}

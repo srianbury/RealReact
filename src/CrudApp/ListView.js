@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { Loading, NoData, withLoading } from './FunctionalComps';
 
 
-const withEdit = (EditRow, ViewRow) => {
+const withEdit = (EditRow, ViewRow, LoadingScreen) => {
+    const EditRowWithLoading = withLoading(EditRow);
+    const ViewRowWithLoading = withLoading(ViewRow);
     return class extends React.Component{
         constructor(props){
             super(props);
@@ -20,8 +22,9 @@ const withEdit = (EditRow, ViewRow) => {
             let row;
             if(edit){
                 row = (
-                    <EditRow
+                    <EditRowWithLoading
                         loading={loading}
+                        loader={LoadingScreen}
                         data={record}
                         id={id}
                         handleSubmit={this.handleSubmit}
@@ -31,8 +34,9 @@ const withEdit = (EditRow, ViewRow) => {
                 );
             } else {
                 row =(
-                    <ViewRow
+                    <ViewRowWithLoading
                         loading={loading}
+                        loader={LoadingScreen}
                         record={record} 
                         handleEdit={()=>this.setState({edit:true})}
                         handleDelete={this.handleDelete} />
@@ -71,8 +75,8 @@ withEdit.propTypes = {
 }
 
 
-const withRowEdit = (EditRow, ViewRow) => {
-    const RowWithEdit = withEdit(withLoading(EditRow), withLoading(ViewRow));
+const withRowEdit = (EditRow, ViewRow, LoadingScreen) => {
+    const RowWithEdit = withEdit(EditRow, ViewRow, LoadingScreen);
     return class extends React.Component{
         render(){
             const { data } = this.props;

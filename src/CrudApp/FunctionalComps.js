@@ -16,9 +16,9 @@ const NoData = () => {
 
 
 const withLoading = (Component) => {
-    return ({ loading, ...props }) => {
+    return ({ loading, loader: LoadingComponent, ...props }) => {
         if (loading) {
-            return (<Loading />);
+            return (<LoadingComponent />);
         } else {
             return (<Component {...props} />);
         }
