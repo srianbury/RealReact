@@ -10,6 +10,7 @@ import { withCrud } from './CrudApp/Crud';
 import { UserInput, UserViewRow, userApiHandler } from './CrudApp/Deltas/Users';
 import { PhotoInput, PhotoViewRow, PhotoEdit, photoApiHandler } from './CrudApp/Deltas/Photos';
 import { Loading} from './CrudApp/FunctionalComps';
+import { Page } from './Components/Dropdown';
 
 
 const UsersWithCrud = withCrud(UserInput, UserViewRow, UserInput, Loading, userApiHandler);
@@ -33,6 +34,9 @@ const App = () => {
 				<Route
 					component={PhotosWithCrudWithDifferentEditForm}
 					path='/photos2' />
+				<Route
+					component={Page}
+					path='/comps' />
 			</Switch>
 		</Router>
 	);
@@ -49,6 +53,7 @@ const Header = () => {
 				<NavLink to="/users" className={linkStyle} activeClassName={activeClassName}>Users</NavLink>
 				<NavLink to="/photos" className={linkStyle} activeClassName={activeClassName}>Photos</NavLink>
 				<NavLink to="/photos2" className={linkStyle} activeClassName={activeClassName}>Photos 2</NavLink>
+				<NavLink to="/comps" className={linkStyle} activeClassName={activeClassName}>Comps</NavLink>
 			</div>
 		</div>
 	);
